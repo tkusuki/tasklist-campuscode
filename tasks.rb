@@ -1,14 +1,19 @@
 # Mensagem de boas vindas
 puts('Bem-vindo ao Task List!')
 
+INSERIR_TAREFA = 1
+VER_TAREFAS = 2
+BUSCAR_TAREFA = 3
+MARCAR_FEITA = 4
+
 # Exibir opções para o usuário
 def menu()
   puts()
   puts('########## MENU ##########')
-  puts('# 1 - Inserir uma tarefa')
-  puts('# 2 - Ver todas as tarefas')
-  puts('# 3 - Buscar uma tarefa')  # Receber um texto e procurar essa tarefa na lista
-  puts('# 4 - Marcar como feita')  # Marcar uma tarefa como Feita
+  puts("# #{INSERIR_TAREFA} - Inserir uma tarefa")
+  puts("# #{VER_TAREFAS} - Ver todas as tarefas")
+  puts("# #{BUSCAR_TAREFA} - Buscar uma tarefa")
+  puts("# #{MARCAR_FEITA} - Marcar como feita")
 
   puts("# 0 - Sair\n\n")
   print('> Escolha uma opção: ')
@@ -26,7 +31,7 @@ tarefas = []
 id_tarefa = 1
 
 while(opcao_escolhida != 0) do
-  if(opcao_escolhida == 1)
+  if(opcao_escolhida == INSERIR_TAREFA)
     # Código para inserir uma tarefa
     puts()
     print('# Insira uma tarefa: ')
@@ -35,15 +40,13 @@ while(opcao_escolhida != 0) do
     tarefa = { id: id_tarefa, descricao: descricao_tarefa, feita: false }
     tarefas << tarefa
     id_tarefa = id_tarefa.next
-  elsif(opcao_escolhida == 2)
+  elsif(opcao_escolhida == VER_TAREFAS)
     # Código para exibir todas as tarefas
     puts("\n# Listando todas as tarefas inseridas: ")
       imprime_tarefa(tarefas)
 
-  elsif(opcao_escolhida == 3)
+  elsif(opcao_escolhida == BUSCAR_TAREFA)
     # Código para buscar uma tarefa
-    # pesquisem sobre o método select do array e tentem fazer a busca com select - ok
-    # exibir uma mensagem no final dizendo quantas tarefas foram encontradas - ok
 
     puts()
     print('# Digite a tarefa que deseja buscar: ')
@@ -60,15 +63,10 @@ while(opcao_escolhida != 0) do
     end
     puts("\nTotal de tarefas encontradas: #{tarefas_encontradas.length}")
 
-  elsif(opcao_escolhida == 4)
-    # 1 imprimir todas tarefas, exibindo ID - OK
-    # 2 perguntar qual tarefa quer marcar como feita (usando ID) - OK
-    # 3 buscar a tarefa pelo ID e trocar o valor de feita para true
-    # 4 atualizar a tarefa no array (ex: remover a tarefa do array e reinserir com o valor atualizado feita = true)
-    # 5 imprimnir uma msg de sucesso
+  elsif(opcao_escolhida == MARCAR_FEITA)
 
     imprime_tarefa(tarefas)
-    print("\n# Informe o ID da tarefa que deseja marcar: ")
+    print("\n# Informe o ID da tarefa que deseja marcar como feita: ")
     id_marcar_tarefa = gets().to_i()
 
     tarefa_para_marcar = tarefas.select do |tarefa|
@@ -86,29 +84,19 @@ while(opcao_escolhida != 0) do
         tarefas.each do |tarefa|
           if(tarefa[:id] == id_marcar_tarefa)
             tarefa[:feita] = true
-            tarefa_para_marcar = tarefa
+            # tarefa_para_marcar = tarefa
           end
         end
 
-        tarefas.delete_if do |tarefa|
-          tarefa[:id] == id_marcar_tarefa
-        end
-
-        tarefas << tarefa_para_marcar
-        tarefas.sort_by! { |hash| hash[:id] }
         imprime_tarefa(tarefas)
         puts("\nTarefa marcada com sucesso!")
-        # puts "\nSucesso!Marcada"
+
       else
         puts("\nTarefa não marcada!")
-
       end
     else
       puts("\nNenhuma tarefa encontrada com esse ID!")
     end
-
-
-
 
   else
     puts('Opção inválida!')
