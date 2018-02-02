@@ -6,6 +6,7 @@ INSERIR_TAREFA = 1
 VER_TAREFAS = 2
 BUSCAR_TAREFA = 3
 MARCAR_FEITA = 4
+SAIR = 0
 
 # Exibir opções para o usuário
 def menu()
@@ -31,7 +32,7 @@ opcao_escolhida = menu()
 tarefas = []
 id_tarefa = 1
 
-while(opcao_escolhida != 0) do
+while(opcao_escolhida != SAIR) do
   if(opcao_escolhida == INSERIR_TAREFA)
     # Código para inserir uma tarefa
     puts()
