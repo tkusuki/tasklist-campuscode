@@ -1,3 +1,4 @@
+require_relative 'tarefa'
 # Mensagem de boas vindas
 puts('Bem-vindo ao Task List!')
 
@@ -37,7 +38,8 @@ while(opcao_escolhida != 0) do
     print('# Insira uma tarefa: ')
     descricao_tarefa = gets().chomp()
     puts("\nTarefa incluída: #{ descricao_tarefa }") # interpolar strings
-    tarefa = { id: id_tarefa, descricao: descricao_tarefa, feita: false }
+    # tarefa = { id: id_tarefa, descricao: descricao_tarefa, feita: false }
+    tarefa = Tarefa.new(id_tarefa, descricao_tarefa )
     tarefas << tarefa
     id_tarefa = id_tarefa.next
   elsif(opcao_escolhida == VER_TAREFAS)
