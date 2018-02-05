@@ -1,12 +1,12 @@
 require_relative 'tarefa'
 
-# Criar sua classe tarefa
+# Criar sua classe tarefa - ok
 # Replicar todos os comportamentos do codigo atual pra classe tarefas
-# Fazer os métodos to_s e include? (include diz se existe o texto ou não, usar na busca)
+# Fazer os métodos to_s e include? (include diz se existe o texto ou não, usar na busca) - ok
 
-# BONUS: ao criar tarefa, perguntar se a tarefa ja foi realizada e usar o parâmetro opcional no initialize
+# BONUS: ao criar tarefa, perguntar se a tarefa ja foi realizada e usar o parâmetro opcional no initialize - ok
 
-# BONUS 2: dentro de to_s, exibir feita sim ou nao, ao invés de true ou false.
+# BONUS 2: dentro de to_s, exibir feita sim ou nao, ao invés de true ou false. - ok
 # DICA: operador ternário
 
 # Mensagem de boas vindas
@@ -49,11 +49,20 @@ while(opcao_escolhida != SAIR) do
     puts()
     print('Insira uma tarefa: ')
     descricao_tarefa = gets().chomp()
-    puts("Tarefa incluída: #{ descricao_tarefa }") # interpolar strings
-    # tarefa = { id: id_tarefa, descricao: descricao_tarefa, feita: false }
-    tarefa = Tarefa.new(id_tarefa, descricao_tarefa)
-    tarefas << tarefa
+
+    print('Tarefa já foi realizada? (Digite 1 - SIM | 2 - NÃO): ')
+    tarefa_realizada = gets().to_i()
+
+    if(tarefa_realizada == 1)
+      tarefa = Tarefa.new(id_tarefa, descricao_tarefa, true)
+      tarefas << tarefa
+    else
+      tarefa = Tarefa.new(id_tarefa, descricao_tarefa)
+      tarefas << tarefa
+    end
+    puts("Tarefa incluída: #{ descricao_tarefa }")
     id_tarefa = id_tarefa.next
+
   elsif(opcao_escolhida == VER_TAREFAS)
     # Código para exibir todas as tarefas
     puts("\nListando todas as tarefas inseridas: ")
@@ -66,7 +75,7 @@ while(opcao_escolhida != SAIR) do
     texto_busca_tarefa = gets().chomp()
 
     tarefas_encontradas = tarefas.select do |tarefa|
-      tarefa.descricao.upcase.include? texto_busca_tarefa.upcase
+      tarefa.include?(texto_busca_tarefa)
     end
 
     puts("\n#{tarefas_encontradas.length} tarefas encontradas")
@@ -77,22 +86,19 @@ while(opcao_escolhida != SAIR) do
     imprime_tarefas(tarefas)
     print("\nInforme o número da tarefa que deseja marcar como feita: ")
     id_marcar_tarefa = gets().to_i()
+    achou_tarefa = false
 
-    tarefa_para_marcar = tarefas.select do |tarefa|
-      tarefa.id == id_marcar_tarefa
-    end
-
-    if(!tarefa_para_marcar.empty?)
-      tarefas.each do |tarefa|
-        if(tarefa.id == id_marcar_tarefa)
-          tarefa.marcar_feita()
-        end
+    tarefas.each do |tarefa|
+      if(tarefa.id == id_marcar_tarefa)
+        achou_tarefa = true
+        tarefa.marcar_feita()
+        imprime_tarefas(tarefas)
+        puts("\nTarefa marcada com sucesso!")
       end
-      imprime_tarefas(tarefas)
-      puts("\nTarefa marcada com sucesso!")
-    else
-      puts("\nNenhuma tarefa encontrada!")
     end
+
+    if(!achou_tarefa)
+      puts("\nNenhuma tarefa encontrada")
 
   else
     puts('Opção inválida!')

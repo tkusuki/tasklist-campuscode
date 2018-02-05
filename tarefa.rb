@@ -14,10 +14,11 @@ class Tarefa
   end
 
   def to_s()
-    "- Tarefa #{ id() } >> #{ descricao() } || Feita: #{ feita() }"
+    string_feita = feita() ? "Sim" : "Não"
+    "- Tarefa #{ id() } >> #{ descricao() } || Feita: #{ string_feita }"
   end
 
-  # def include?(texto_busca)
-  #
-  # end
+  def include?(texto_busca)
+    descricao.upcase.include? texto_busca.upcase
+  end
 end
