@@ -1,32 +1,23 @@
 class Tarefa
-  def initialize(id, descricao)
+  attr_reader :id, :feita
+  # attr_reader :descricao
+  attr_accessor :descricao
+
+  def initialize(id, descricao, feita = false)
     @id = id
     @descricao = descricao
-    @feita = false
-  end
-
-  def id()
-    @id
-  end
-
-  def descricao()
-    @descricao
-  end
-
-  def feita()
-    @feita
-  end
-
-  def descricao=(nova_descricao)
-    @descricao = nova_descricao
-  end
-
-  def feita=(novo_valor)
-    @feita = novo_valor
+    @feita = feita
   end
 
   def marcar_feita()
     @feita = true
-
   end
+
+  def to_s()
+    "- Tarefa #{ id() } >> #{ descricao() } || Feita: #{ feita() }"
+  end
+
+  # def include?(texto_busca)
+  #
+  # end
 end
